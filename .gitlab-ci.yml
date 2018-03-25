@@ -1,0 +1,94 @@
+###### STAGES #################################################################
+stages:
+  - install
+  - test
+  - build
+  - publish
+  - deploy
+
+###### TEMPLATES ##############################################################
+.general: &general
+  tags:
+    - devaus
+  variables:
+    GIT_STRATEGY: fetch
+
+###### JOBS ###################################################################
+install:
+  <<: *general
+  stage: install
+  artifacts:
+    paths:
+      - node_modules
+    expire_in: 1 day
+  script:
+    - yarn
+    - yarn add posti
+
+lint:
+  <<: *general
+  stage: test
+  dependencies:
+    - install
+  script:
+    - yarn lint
+
+test:
+  <<: *general
+  stage: test
+  dependencies:
+    - install
+  artifacts:
+    paths:
+      - coverage
+    expire_in: 1 month
+  script:
+    - yarn test --ci --coverage
+
+build:
+  <<: *general
+  stage: build
+  dependencies:
+    - install
+  artifacts:
+    paths:
+      - dist
+    expire_in: 1 day
+  script:
+    - yarn build
+
+# Run the jobs below only for `release` branch.
+publish to npm:
+  <<: *general
+  stage: publish
+  only:
+    - release
+  dependencies:
+    - build
+  allow_failure: false
+  script:
+    - echo "Publish version $(node -p -e "require('./package.json').version")"
+    - npm publish
+
+update pages:
+  <<: *general
+  stage: deploy
+  only:
+    - release
+  dependencies:
+    - test
+  script:
+    - ${update_pages_command}
+
+deploy to github:
+  <<: *general
+  stage: deploy
+  only:
+    - release
+  dependencies: []
+  script:
+    - if ! [[ $(git remote | grep github | wc -l) > "0" ]]; then git remote add github git@github.com:kirbo/posti-graphql.git; fi
+    - export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+    - git push github HEAD:refs/heads/master
+    - git tag -a v${PACKAGE_VERSION} -m "Version ${PACKAGE_VERSION}"
+    - git push github v${PACKAGE_VERSION}
