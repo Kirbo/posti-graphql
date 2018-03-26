@@ -15,7 +15,7 @@
     "lint": "eslint .",
     "test": "yarn test:debug --silent",
     "test:debug": "cross-env NODE_ENV=test jest --verbose --forceExit",
-    "prepush": "yarn lint"
+    "prepush": "yarn lint && yarn test"
   },
   "engines": {
     "node": ">=8.9.0",
@@ -79,7 +79,8 @@
     "jest": "22.4.2",
     "jest-plugin-console-matchers": "2.7.0",
     "nodemon": "1.17.2",
-    "npm-run-all": "4.1.2"
+    "npm-run-all": "4.1.2",
+    "posti": ">=1.0.1"
   },
   "peerDependencies": {
     "posti": ">=1.0.1"

@@ -23,7 +23,6 @@ install:
     expire_in: 1 day
   script:
     - yarn
-    - yarn add posti
 
 lint:
   <<: *general
