@@ -4936,8 +4936,8 @@ postgres-interval@^1.1.0:
     xtend "^4.0.0"
 
 posti@>=1.0.1:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/posti/-/posti-1.0.0.tgz#99a407e5415aaf4c3e6f3cc152dded8c752efd24"
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/posti/-/posti-1.0.1.tgz#cdb1aa409f56ffbbce38500c90b286d581946070"
   dependencies:
     bluebird "3.5.1"
     cli-progress "1.8.0"
