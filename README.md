@@ -21,10 +21,10 @@ Check changes [here](./CHANGELOG.md).
 ### Limitations
 
   - Timeframe: `24 hours`
-  - Maximum requests per IP timeframe: `20`
-  - First 5 requests without delay.
-  - Delay each request for: `10 seconds`
-  - After 5th request, delay each request with `+10 seconds from the previous`.
+  - Maximum requests per IP timeframe: `50`
+  - `First 10` requests without delay.
+  - Delay each request for: `5 seconds`
+  - After 5th request, delay each request with `+5 seconds from the previous`.
 
 ### Links
   - [GraphQL Playground](https://posti-graphql.demo.devaus.eu/playground)
