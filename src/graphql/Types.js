@@ -1,11 +1,11 @@
 import Address from './Types/Address';
-import Postalcode from './Types/Postalcode';
-import PostalcodeChange from './Types/PostalcodeChange';
+import PostalCode from './Types/PostalCode';
+import PostalCodeChange from './Types/PostalCodeChange';
 
 const Types = `
 ${Address}
-${Postalcode}
-${PostalcodeChange}
+${PostalCode}
+${PostalCodeChange}
 `;
 
 export default Types;

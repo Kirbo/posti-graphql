@@ -20,9 +20,11 @@ global.config = config;
  */
 const options = (criteria, info) => {
   const where = {};
-  Object.keys(criteria).forEach((field) => {
-    where[field] = { [Op.like]: criteria[field] };
-  });
+  if (criteria) {
+    Object.keys(criteria).forEach((field) => {
+      where[field] = { [Op.like]: criteria[field] };
+    });
+  }
   return {
     where,
     attributes: {

@@ -45,7 +45,6 @@ const schema = makeExecutableSchema({
 });
 
 app.use(compression());
-
 app.enable('trust proxy');
 
 const limiter = new RateLimit(serverConfig.limiter);
