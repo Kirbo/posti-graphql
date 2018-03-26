@@ -78,6 +78,7 @@ update pages:
     - test
   script:
     - ${update_pages_command}
+    - ${update_demo}
 
 deploy to github:
   <<: *general
