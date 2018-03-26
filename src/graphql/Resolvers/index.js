@@ -1,11 +1,36 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 import graphqlFields from 'graphql-fields';
+import Sequelize from 'sequelize';
 
 import { config } from 'posti';
 import GrahpQL from '../../classes/GraphQL';
 
+const { Op } = Sequelize;
+
 global.config = config;
+
+/**
+ * Get options.
+ *
+ * @param {Object} criteria - Where criteria.
+ * @param {Object} info - Info.
+ *
+ * @returns {Object} Options for query.
+ */
+const options = (criteria, info) => {
+  const where = {};
+  Object.keys(criteria).forEach((field) => {
+    where[field] = { [Op.like]: criteria[field] };
+  });
+  return {
+    where,
+    attributes: {
+      include: Object.keys(graphqlFields(info)),
+    },
+    limit: 100,
+  };
+};
 
 const database = new GrahpQL();
 let models = {};
@@ -64,39 +89,15 @@ const resolverMap = {
   }),
 
   Query: {
-    Addresses: (obj, { where }, context, info) => {
-      const options = {
-        where,
-        attributes: {
-          include: Object.keys(graphqlFields(info)),
-        },
-        limit: 100,
-      };
-
-      return models.addresses.findAll(options);
-    },
-    PostalCodes: (obj, { where }, context, info) => {
-      const options = {
-        where,
-        attributes: {
-          include: Object.keys(graphqlFields(info)),
-        },
-        limit: 100,
-      };
-
-      return models.postalCodes.findAll(options);
-    },
-    PostalCodeChanges: (obj, { where }, context, info) => {
-      const options = {
-        where,
-        attributes: {
-          include: Object.keys(graphqlFields(info)),
-        },
-        limit: 100,
-      };
-
-      return models.postalCodeChanges.findAll(options);
-    },
+    Addresses: (obj, { where }, context, info) => (
+      models.addresses.findAll(options(where, info))
+    ),
+    PostalCodes: (obj, { where }, context, info) => (
+      models.postalCodes.findAll(options(where, info))
+    ),
+    PostalCodeChanges: (obj, { where }, context, info) => (
+      models.postalCodeChanges.findAll(options(where, info))
+    ),
   },
 };
 
