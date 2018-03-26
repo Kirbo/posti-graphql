@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+
 import Scalars from './Scalars';
 import Types from './Types';
 import Query from './Query';
