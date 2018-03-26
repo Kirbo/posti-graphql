@@ -6,7 +6,7 @@
   "author": "Kimmo Saari <kirbo@kirbo-designs.com>",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_ENV=build npx babel src --out-dir dist",
+    "build": "yarn build:schema && cross-env NODE_ENV=build npx babel src --out-dir dist",
     "build:schema": "babel-node src/build.js",
     "start": "babel-node src/server.js",
     "start:dev": "nodemon --ignore src/graphql/Types/ -x npm-run-all build:schema start:server",
