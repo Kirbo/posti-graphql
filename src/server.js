@@ -45,27 +45,8 @@ const schema = makeExecutableSchema({
 });
 
 app.use(compression());
-
 app.enable('trust proxy');
 
-/**
- * Enable CORS for https://www.graphqlbin.com.
- *
- * @param {Object} req - Request.
- * @param {Object} res - Response.
- * @param {Function} next - Next.
- *
- * @returns {void}
- */
-const allowCrossDomain = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://www.graphqlbin.com');
-
-  next();
-};
-
-app.configure(() => {
-  app.use(allowCrossDomain);
-});
 const limiter = new RateLimit(serverConfig.limiter);
 
 app.use('/graphql', limiter, bodyParser.json(), graphqlExpress({
