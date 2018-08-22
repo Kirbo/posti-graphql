@@ -29,4 +29,5 @@ module.exports = {
     '/src/server.js',
     '/src/index.js',
   ],
+  testURL: 'http://localhost/',
 };
