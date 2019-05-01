@@ -95,6 +95,8 @@ build:
       - dist
     expire_in: 1 day
   script:
+    - mkdir ~/.posti
+    - cp test/mariadb.config.js ~/.posti/config.js
     - yarn build
 
 # Run the jobs below only for `release` branch.
