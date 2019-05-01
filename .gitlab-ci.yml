@@ -128,7 +128,7 @@ update pages:
     - echo "${gitconfig}" > ~/.gitconfig
     - ssh-keyscan -t rsa ${demo_host} >> ~/.ssh/known_hosts
     - rsync coverage ${demo_user}@${demo_host}:${demo_path} --delete-after -r -v
-    - ssh ${demo_user}@${demo_host} '${update_demo_command}'
+    - ssh ${demo_user}@${demo_host} "${update_demo_command}"
 
 deploy to github:
   <<: *general
