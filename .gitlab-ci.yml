@@ -1,3 +1,5 @@
+image: kirbownz/node8-rsync-python-ssh
+
 ###### STAGES #################################################################
 stages:
   - install
@@ -13,6 +15,10 @@ stages:
   variables:
     GIT_STRATEGY: fetch
 
+variables:
+  # Docker in Docker variables
+  DOCKER_HOST: "tcp://docker:2375"
+
 ###### JOBS ###################################################################
 install:
   <<: *general
@@ -22,6 +28,7 @@ install:
       - node_modules
     expire_in: 1 day
   script:
+    - rm yarn.lock
     - yarn
 
 lint:
@@ -32,8 +39,16 @@ lint:
   script:
     - yarn lint
 
-test:
+mariadb:
   <<: *general
+  variables:
+    # Configure mysql environment variables (https://hub.docker.com/r/linuxserver/mariadb#parameters)
+    MYSQL_DATABASE: POSTI
+    MYSQL_USER: POSTI
+    MYSQL_PASSWORD: POSTI
+  services:
+    - docker:stable-dind
+    - linuxserver/mariadb
   stage: test
   dependencies:
     - install
@@ -42,7 +57,33 @@ test:
       - coverage
     expire_in: 1 month
   script:
+    - mkdir ~/.posti
+    - cp test/mariadb.config.js ~/.posti/config.js
     - yarn test --ci --coverage
+
+postgres:
+  <<: *general
+  variables:
+    # Configure mysql environment variables (https://hub.docker.com/_/postgres#environment-variables)
+    POSTGRES_DB: POSTI
+    POSTGRES_USER: POSTI
+    POSTGRES_PASSWORD: POSTI
+  services:
+    - docker:stable-dind
+    - postgres:latest
+  stage: test
+  dependencies:
+    - install
+  artifacts:
+    paths:
+      - coverage
+    expire_in: 1 month
+  script:
+    - mkdir ~/.posti
+    - cp test/postgresql.config.js ~/.posti/config.js
+    - yarn test --ci --coverage
+  # Not working yet, so allow failure for now.
+  allow_failure: true
 
 build:
   <<: *general
@@ -66,6 +107,7 @@ publish to npm:
     - build
   allow_failure: false
   script:
+    - echo "${npmrc}" > ~/.npmrc
     - echo "Publish version $(node -p -e "require('./package.json').version")"
     - npm publish
 
@@ -75,10 +117,16 @@ update pages:
   only:
     - release
   dependencies:
-    - test
+    - mariadb
   script:
-    - ${update_pages_command}
-    - ${update_demo}
+    - mkdir -p ~/.ssh
+    - echo "${ssh_key}" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh
+    - chmod 600 ~/.ssh/id_rsa
+    - echo "${gitconfig}" > ~/.gitconfig
+    - ssh-keyscan -t rsa ${demo_host} >> ~/.ssh/known_hosts
+    - rsync coverage ${demo_user}@${demo_host}:${demo_path} --delete-after -r -v
+    - ssh ${demo_user}@${demo_host} '${update_demo_command}'
 
 deploy to github:
   <<: *general
@@ -87,6 +135,13 @@ deploy to github:
     - release
   dependencies: []
   script:
+    - mkdir -p ~/.ssh
+    - echo "${ssh_key}" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh
+    - chmod 600 ~/.ssh/id_rsa
+    - echo "${ssh_config}" > ~/.ssh/config
+    - echo "${gitconfig}" > ~/.gitconfig
+    - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
     - if ! [[ $(git remote | grep github | wc -l) > "0" ]]; then git remote add github git@github.com:kirbo/posti-graphql.git; fi
     - export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
     - git push github HEAD:refs/heads/master

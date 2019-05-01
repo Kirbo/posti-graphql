@@ -1,12 +1,11 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 import graphqlFields from 'graphql-fields';
-import Sequelize from 'sequelize';
+import { Op } from 'sequelize';
+import moment from 'moment';
 
 import { config } from 'posti';
 import GrahpQL from '../../classes/GraphQL';
-
-const { Op } = Sequelize;
 
 global.config = config;
 
@@ -38,14 +37,19 @@ const database = new GrahpQL();
 let models = {};
 database.connect()
   .then(async () => {
-    await database.defineTable('ADDRESSES');
-    await database.defineTable('ZIPCODES');
-    await database.defineTable('ZIPCODE_CHANGES');
-    models = {
-      addresses: database.getTableModel('ADDRESSES'),
-      postalCodes: database.getTableModel('ZIPCODES'),
-      postalCodeChanges: database.getTableModel('ZIPCODE_CHANGES'),
-    };
+    Promise
+      .all([
+        await database.defineTable('ADDRESSES'),
+        await database.defineTable('ZIPCODES'),
+        await database.defineTable('ZIPCODE_CHANGES'),
+      ])
+      .then(() => {
+        models = {
+          addresses: database.getTableModel('ADDRESSES'),
+          postalCodes: database.getTableModel('ZIPCODES'),
+          postalCodeChanges: database.getTableModel('ZIPCODE_CHANGES'),
+        };
+      });
   });
 
 const resolverMap = {
@@ -61,7 +65,7 @@ const resolverMap = {
      * @returns {Date} New date.
      */
     parseValue: value => (
-      new Date(value)
+      moment(value).format('YYYY-MM-DD')
     ),
 
     /**
@@ -72,7 +76,7 @@ const resolverMap = {
      * @returns {Date} Timestamp in milliseconds.
      */
     serialize: value => (
-      value.getTime()
+      moment(value).format('YYYY-MM-DD')
     ),
 
     /**
@@ -84,7 +88,9 @@ const resolverMap = {
      */
     parseLiteral: (ast) => {
       if (ast.kind === Kind.INT) {
-        return parseInt(ast.value, 10);
+        return moment(parseInt(ast.value, 10)).format('YYYY-MM-DD');
+      } else if (ast.kind === Kind.STRING) {
+        return moment(ast.value).format('YYYY-MM-DD');
       }
       return null;
     },

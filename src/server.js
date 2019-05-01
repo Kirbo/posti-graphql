@@ -1,14 +1,10 @@
 #!/usr/bin/env ./node_modules/.bin/babel-node
 
-import 'babel-polyfill';
-
 import express from 'express';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import bodyParser from 'body-parser';
+import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
-import { makeExecutableSchema } from 'graphql-tools';
-import expressPlayground from 'graphql-playground-middleware-express';
 import RateLimit from 'express-rate-limit';
+import SlowDown from 'express-slow-down';
 
 import {
   config,
@@ -28,43 +24,48 @@ const serverConfig = {
   tracing: true,
   cacheControl: true,
   production: false,
-  limiter: {
+  rateLimiter: {
     windowMs: 24 * 60 * 60 * 1000,
+    max: 20,
+  },
+  speedLimiter: {
     delayAfter: 5,
     delayMs: 10 * 1000,
-    max: 20,
+  },
+  playground: {
+    endpoint: '/graphql',
+    settings: {
+      'editor.theme': 'light',
+    },
   },
   ...global.config.server,
 };
 
+const rateLimiter = RateLimit(serverConfig.rateLimiter);
+const speedLimiter = SlowDown(serverConfig.speedLimiter);
+
 const app = express();
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
-
 app.use(compression());
 app.enable('trust proxy');
+app.use(rateLimiter);
+app.use(speedLimiter);
 
-const limiter = new RateLimit(serverConfig.limiter);
+let playground = {};
 
-app.use('/graphql', limiter, bodyParser.json(), graphqlExpress({
-  schema,
-  tracing: serverConfig.tracing,
-  cacheControl: serverConfig.cacheControl,
-}));
 if (!serverConfig.production) {
-  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
-  app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
+  // eslint-disable-next-line prefer-destructuring
+  playground = serverConfig.playground;
 }
+
+const { tracing, cacheControl } = serverConfig;
+
+new ApolloServer({ typeDefs, resolvers, tracing, cacheControl, playground }).applyMiddleware({ app });
 
 app.listen(serverConfig.port, () => {
   console.info(`GraphQL endpoint:         http://localhost:${serverConfig.port}/graphql`);
   if (!serverConfig.production) {
     console.info('----');
     console.info('For development:');
-    console.info(`  GraphiQL served in:     http://localhost:${serverConfig.port}/graphiql`);
-    console.info(`  Playground served in:   http://localhost:${serverConfig.port}/playground`);
+    console.info(`  Playground served in:   http://localhost:${serverConfig.port}/graphql`);
   }
 });

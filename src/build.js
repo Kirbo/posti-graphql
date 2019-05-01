@@ -1,7 +1,5 @@
 #!/usr/bin/env ./node_modules/.bin/babel-node
 
-import 'babel-polyfill';
-
 import {
   logBlock,
   logError,
@@ -22,11 +20,7 @@ global.config = require(configPath).default;
     logBlock('Creating GraphQL schemas:');
 
     const graphql = new GraphQL();
-    [
-      'ADDRESSES',
-      'ZIPCODES',
-      'ZIPCODE_CHANGES',
-    ].forEach(async (model) => {
+    ['ADDRESSES', 'ZIPCODES', 'ZIPCODE_CHANGES'].forEach(async (model) => {
       await graphql.createTableSchema(model, __dirname);
     });
 
