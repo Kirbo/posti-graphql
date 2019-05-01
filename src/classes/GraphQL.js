@@ -31,7 +31,6 @@ class GraphQL extends Database {
         global.config.password,
         {
           logging: false,
-          operatorsAliases: false,
           host: global.config.host,
           dialect: global.config.dialect,
           ...global.config.dialectOptions,

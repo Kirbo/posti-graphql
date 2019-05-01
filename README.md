@@ -33,9 +33,7 @@ Check changes [here](./CHANGELOG.md).
    ```
    yarn start-server
    ```
-5. Play around, either in:
-     - http://localhost:3000/graphiql or
-     - http://localhost:3000/playground
+5. Play around, either in http://localhost:3000/graphql
 
 
 ## Demo
@@ -48,12 +46,11 @@ Check changes [here](./CHANGELOG.md).
     (`delay` = `delay + 5` -> 13th request = +15sec, 15th = +25sec...).
 
 ### Links
-  - [First 100 rows from `Addresses`](https://posti-graphql.demo.devaus.eu/graphiql?query=%7B%0A%09Addresses%20%7B%0A%20%20%20%20address%0A%20%20%20%20postOfficeName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D)
-  - [Search from `Addresses` where address begins with `mannerheim` and postOfficeName is `Helsinki`](https://posti-graphql.demo.devaus.eu/graphiql?query=%7B%0A%20%20Addresses\(where%3A%20%7B%0A%20%20%20%20address%3A%20%22mannerheim%25%22%0A%20%20%20%20postOfficeName%3A%20%22Helsinki%22%0A%20%20%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%20%20%20%20oddEven%0A%20%20%20%20smallestBuildingNumber1%0A%20%20%20%20highestBuildingNumber1%0A%20%20%7D%0A%7D)
-  - [Search from `Addresses` where address begins with `turuntie` and building numbers are `odd`](https://posti-graphql.demo.devaus.eu/graphiql?query=%7B%0A%20%20Addresses\(where%3A%20%7Baddress%3A%20%22turuntie%25%22%2C%20oddEven%3A%201%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D%0A)
+  - [First 100 rows from `Addresses`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%09Addresses%20%7B%0A%20%20%20%20address%0A%20%20%20%20postOfficeName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D)
+  - [Search from `Addresses` where address begins with `mannerheim` and postOfficeName is `Helsinki`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%20%20Addresses\(where%3A%20%7B%0A%20%20%20%20address%3A%20%22mannerheim%25%22%0A%20%20%20%20postOfficeName%3A%20%22Helsinki%22%0A%20%20%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%20%20%20%20oddEven%0A%20%20%20%20smallestBuildingNumber1%0A%20%20%20%20highestBuildingNumber1%0A%20%20%7D%0A%7D)
+  - [Search from `Addresses` where address begins with `turuntie` and building numbers are `odd`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%20%20Addresses\(where%3A%20%7Baddress%3A%20%22turuntie%25%22%2C%20oddEven%3A%201%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D%0A)
 
-  - [GraphQL Playground](https://posti-graphql.demo.devaus.eu/playground)
-  - [GraphiQL](https://posti-graphql.demo.devaus.eu/graphiql)
+  - [GraphQL Playground](https://posti-graphql.demo.devaus.eu/graphql)
 
 
 ## Disclaimer
