@@ -1,6 +1,6 @@
 {
   "name": "posti-graphql",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Posti Basic Address auto-updater GraphQL server",
   "repository": "https://github.com/kirbo/posti-graphql",
   "author": "Kimmo Saari <kirbo@kirbo-designs.com>",
