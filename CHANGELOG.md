@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [3.1.0] - 2019-05-01
+
+### Added
+- Ability to use `cors`, see [example configuration](https://github.com/kirbo/posti/blob/master/posti.config.example.js#L47).
+
+### Changed
+- Updated the dependencies.
+
+
 ## [3.0.1] - 2019-05-01
 
 ### Fixed

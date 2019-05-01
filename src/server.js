@@ -5,6 +5,7 @@ import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import RateLimit from 'express-rate-limit';
 import SlowDown from 'express-slow-down';
+import cors from 'cors';
 
 import {
   config,
@@ -49,6 +50,9 @@ app.use(compression());
 app.enable('trust proxy');
 app.use(rateLimiter);
 app.use(speedLimiter);
+if (serverConfig.cors) {
+  app.use(cors(serverConfig.cors));
+}
 
 let playground = {};
 
