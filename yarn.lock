@@ -5642,10 +5642,10 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-posti@>=3.0.2:
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/posti/-/posti-3.0.2.tgz#d95bc427b896ba1e3e013836085f703917f3a434"
-  integrity sha512-RQ7UZjC6XwGeRZRjFd2gGuISc6WK3rU+8aedurqCdf1hiv24+3lgN74qqXH1CtyrcYZnM7gPveqlhMbYXIE1tg==
+posti@>=3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/posti/-/posti-3.0.4.tgz#b67572d0e5d66251a9657d71821e1aa15456b549"
+  integrity sha512-apR4zok+arHhoASRxGkt1UhpNGssN9fpc+zsSNGU3Fp5g6xrl7JG5sA+o+pOO2ZmTkT1uqrAgXNJAd42JayopA==
   dependencies:
     bluebird "3.5.4"
     cli-progress "2.1.1"
