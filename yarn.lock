@@ -5655,10 +5655,10 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-posti@>=3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/posti/-/posti-3.1.0.tgz#cd573e71823c168b7d64f6c612469f4775ea2bb7"
-  integrity sha512-FtEHHNayQAnpA2D1DTp9S/ba4AZENeg3gbdsqv3V+9uXLAXpF0gojTl9VNCnZICy9d5xQuPCdgkmLcFhFSAdZg==
+posti@>=3.1.1:
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/posti/-/posti-3.1.1.tgz#062eb5d11cf0660da4fdbf667593996f27025f75"
+  integrity sha512-0pBzGEs+mMLs1Gclfkf7lSQJyJdunB+qc/8V/nvGHJ4hV6acwRJB4okwBBh3Ke0p/NlAti1nloQXoQkkPjcMww==
   dependencies:
     bluebird "3.5.4"
     cli-progress "2.1.1"
@@ -5668,6 +5668,7 @@ posti@>=3.1.0:
     mysql2 "1.6.5"
     pg "7.10.0"
     pg-hstore "2.3.2"
+    regenerator-runtime "0.13.2"
     request "2.88.0"
     sequelize "5.8.0"
     sqlite3 "4.0.6"
@@ -5912,7 +5913,7 @@ regenerate@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
 
-regenerator-runtime@^0.13.2:
+regenerator-runtime@0.13.2, regenerator-runtime@^0.13.2:
   version "0.13.2"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha512-S/TQAZJO+D3m9xeN1WTI8dLKBBiRgXBlTJvbWjCThHWZj9EvHK70Ff50/tYj2J/fvBY6JtFVwRuazHN2E7M9BA==

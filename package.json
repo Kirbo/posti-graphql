@@ -1,6 +1,6 @@
 {
   "name": "posti-graphql",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Posti Basic Address auto-updater GraphQL server",
   "repository": "https://github.com/kirbo/posti-graphql",
   "author": "Kimmo Saari <kirbo@kirbo-designs.com>",
@@ -49,7 +49,8 @@
     "graphql-fields": "2.0.3",
     "graphql-playground-middleware-express": "1.7.12",
     "graphql-tools": "4.0.4",
-    "moment": "2.24.0"
+    "moment": "2.24.0",
+    "regenerator-runtime": "0.13.2"
   },
   "devDependencies": {
     "@babel/cli": "7.4.4",
@@ -82,9 +83,9 @@
     "jest-plugin-console-matchers": "2.9.0",
     "nodemon": "1.19.0",
     "npm-run-all": "4.1.5",
-    "posti": ">=3.1.0"
+    "posti": ">=3.1.1"
   },
   "peerDependencies": {
-    "posti": ">=3.1.0"
+    "posti": ">=3.1.1"
   }
 }
