@@ -1,7 +1,7 @@
 # POSTI-GRAPHQL
 
 ![pipeline status](https://posti-graphql.devaus.eu/pipeline.svg)
-![coverage report](https://posti-graphql.devaus.eu/coverage.svg)
+[![coverage report](https://posti-graphql.devaus.eu/coverage.svg)](https://posti-graphql.devaus.eu/coverage)
 ![latest version](https://img.shields.io/github/package-json/v/kirbo/posti-graphql.svg)
 ![last commit](https://img.shields.io/github/last-commit/kirbo/posti-graphql.svg)
 ![total downloads](https://img.shields.io/npm/dt/posti-graphql.svg)
@@ -46,6 +46,7 @@ Check changes [here](./CHANGELOG.md).
     (`delay` = `delay + 5` -> 13th request = +15sec, 15th = +25sec...).
 
 ### Links
+  - [Coverage report](https://posti-graphql.devaus.eu/coverage)
   - [First 100 rows from `Addresses`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%09Addresses%20%7B%0A%20%20%20%20address%0A%20%20%20%20postOfficeName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D)
   - [Search from `Addresses` where address begins with `mannerheim` and postOfficeName is `Helsinki`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%20%20Addresses\(where%3A%20%7B%0A%20%20%20%20address%3A%20%22mannerheim%25%22%0A%20%20%20%20postOfficeName%3A%20%22Helsinki%22%0A%20%20%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%20%20%20%20oddEven%0A%20%20%20%20smallestBuildingNumber1%0A%20%20%20%20highestBuildingNumber1%0A%20%20%7D%0A%7D)
   - [Search from `Addresses` where address begins with `turuntie` and building numbers are `odd`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%20%20Addresses\(where%3A%20%7Baddress%3A%20%22turuntie%25%22%2C%20oddEven%3A%201%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D%0A)
