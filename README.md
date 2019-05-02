@@ -43,7 +43,7 @@ Check changes [here](./CHANGELOG.md).
   - Maximum `50` requests per IP-address, within `30` minutes.
   - First `10` requests have 0 delay.
   - Maximum delay per request `30` seconds.
-  - Every request after the first `10th` request will delay for additional `2.5` seconds, until `30` seconds of delay, i.e.:
+  - Every request after the `10th` request will delay for additional `2.5` seconds, until `30` seconds of delay, i.e.:
     - `11th` request = 2.5sec
     - `12th` request = 5sec
     - `13th` request = 7.5sec
