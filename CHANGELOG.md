@@ -11,14 +11,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Configuration ability to defined the `limit` in queries.
-- Ability to enable logging, by launching `log=true posti-server`.
-  If you need even more verbose logging, use: `log=info posti-server`.
+- Possibility to enable logs, by launching `log=true posti-server`.
+  If you need even more verbose logs, use: `log=info posti-server`.
 - New type in `Addresses` query: `buildingNumber`. This will automacitally search for the building number between range:
   - `smallestBuildingNumber1`
   - `smallestBuildingNumber2`
   - `highestBuildingNumber1`
   - `highestBuildingNumber2`
   See the [example in README.md line 58](./README.md).
+
+### Changed
+- Updated `README.md`.
 
 ### Fixed
 - Comments in schema.

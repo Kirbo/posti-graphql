@@ -37,25 +37,32 @@ Check changes [here](./CHANGELOG.md).
 
 
 ## Demo
-### Limitations
+  Demo playground can be found [here](https://posti-graphql.demo.devaus.eu/graphql).
 
-  - Timeframe: `24 hours`
-  - Maximum `50` requests per IP within the timeframe.
-  - `First 10` requests without delay.
-  - After 10th request, delay every request with `+5 seconds from the previous`
-    (`delay` = `delay + 5` -> 13th request = +15sec, 15th = +25sec...).
+### Demo limitations
+  - Maximum `50` requests per IP-address, within `30` minutes.
+  - First `10` requests have 0 delay.
+  - Maximum delay per request `30` seconds.
+  - Every request after the first `10th` request will delay for additional `2.5` seconds, until `30` seconds of delay, i.e.:
+    - `11th` request = 2.5sec
+    - `12th` request = 5sec
+    - `13th` request = 7.5sec
+    - `20th` request = 25sec
+    - `22nd` request = 30sec
+    - `50th` request = 30sec
+    - `51st` request = error message that the maximum requests has been exceeded.
+  - Default `limit` for queries is `10`.
+  - Maximum allowed `limit` for queries is `50`.
 
-### Links
-  - [Coverage report](https://posti-graphql.devaus.eu/coverage)
-  - [First 100 rows from `Addresses`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%09Addresses%20%7B%0A%20%20%20%20address%0A%20%20%20%20postOfficeName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D)
-  - [Search from `Addresses` where address begins with `mannerheim` and postOfficeName is `Helsinki`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%20%20Addresses\(where%3A%20%7B%0A%20%20%20%20address%3A%20%22mannerheim%25%22%0A%20%20%20%20postOfficeName%3A%20%22Helsinki%22%0A%20%20%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%20%20%20%20oddEven%0A%20%20%20%20smallestBuildingNumber1%0A%20%20%20%20highestBuildingNumber1%0A%20%20%7D%0A%7D)
-  - [Search from `Addresses` where address begins with `turuntie` and building numbers are `odd`](https://posti-graphql.demo.devaus.eu/graphql?query=%7B%0A%20%20Addresses\(where%3A%20%7Baddress%3A%20%22turuntie%25%22%2C%20oddEven%3A%201%7D\)%20%7B%0A%20%20%20%20address%0A%20%20%20%20municipalityName%0A%20%20%20%20postalCode%0A%20%20%7D%0A%7D%0A)
-
-  - [GraphQL Playground](https://posti-graphql.demo.devaus.eu/graphql)
+### PRO-TIP
+- Press `CTRL + Space` or `ALT + Space` in the Playground to open the autocomplete menu.
+- Click the Green `Schema` button in the right corner to open the GraphQL schema.
 
 ### Examples to query
 
-#### Search all the addresses beginning with "mannerheimin" and that has building number 15
+#### Addresses
+
+##### Search all the addresses beginning with "mannerheimin" and that has building number 15
 ```
 {
   Addresses (where: {
@@ -79,7 +86,7 @@ Check changes [here](./CHANGELOG.md).
 }
 ```
 
-#### Search all the addresses in postal code "00100" that has building number 2
+#####  Search all the addresses in postal code "00100" that has building number 2
 ```
 {
   Addresses (where: {
@@ -95,7 +102,7 @@ Check changes [here](./CHANGELOG.md).
 }
 ```
 
-#### Search all the addresses for "turuntie" and limit for 5 matches
+#####  Search all the addresses for "turuntie" and limit for 5 matches
 ```
 {
   Addresses (where: {
@@ -109,6 +116,86 @@ Check changes [here](./CHANGELOG.md).
   }
 }
 ```
+
+#### PostalCodes
+
+##### Search all the postal codes beginning with `0010*`
+```
+{
+  PostalCodes (where: {
+    postalCode: "0010%"
+  }) {
+    postalCode
+    postOfficeName
+    entryIntoForceAt
+    typeCode
+    regionName
+    municipalityName
+    municipalityLanguage
+  }
+}
+```
+
+#### PostalCodeChanges
+
+#####  Search all the renamed post offices from the changes
+```
+{
+  PostalCodeChanges (where: {
+    eventCode: 1
+  }) {
+    updatedAt
+    oldPostalCode
+    oldPostOfficeName
+    postalCode
+    postOfficeName
+    municipalityName
+    eventCode
+  }
+}
+```
+
+#####  Search all the closed post offices from the changes
+```
+{
+  PostalCodeChanges (where: {
+    eventCode: 2
+  }) {
+    updatedAt
+    oldPostalCode
+    oldPostOfficeName
+    postalCode
+    postOfficeName
+    municipalityName
+    eventCode
+  }
+}
+```
+
+#####  Search all the new post offices from the changes
+```
+{
+  PostalCodeChanges (where: {
+    eventCode: 3
+  }) {
+    updatedAt
+    oldPostalCode
+    oldPostOfficeName
+    postalCode
+    postOfficeName
+    municipalityName
+    eventCode
+  }
+}
+```
+
+
+
+
+
+### Links
+  - [Coverage report](https://posti-graphql.devaus.eu/coverage)
+  - [GraphQL Playground](https://posti-graphql.demo.devaus.eu/graphql)
 
 
 ## Disclaimer
