@@ -53,6 +53,63 @@ Check changes [here](./CHANGELOG.md).
 
   - [GraphQL Playground](https://posti-graphql.demo.devaus.eu/graphql)
 
+### Examples to query
+
+#### Search all the addresses beginning with "mannerheimin" and that has building number 15
+```
+{
+  Addresses (where: {
+    address: "mannerheimin%"
+    buildingNumber: 15
+  }) {
+    address
+    postOfficeName
+    municipalityName
+    postalCode
+    oddEven
+    smallestBuildingNumber1
+    smallestDeliveryLetter1
+    smallestBuildingNumber2
+    smallestDeliveryLetter2
+    highestBuildingNumber1
+    highestDeliveryLetter1
+    highestBuildingNumber2
+    highestDeliveryLetter2
+  }
+}
+```
+
+#### Search all the addresses in postal code "00100" that has building number 2
+```
+{
+  Addresses (where: {
+    postalCode: "00100"
+    buildingNumber: 2
+  }) {
+    address
+    municipalityName
+    postalCode
+    smallestBuildingNumber1
+    highestBuildingNumber1
+  }
+}
+```
+
+#### Search all the addresses for "turuntie" and limit for 5 matches
+```
+{
+  Addresses (where: {
+    address: "turuntie"
+  }, limit: 5) {
+    address
+    municipalityName
+    postalCode
+    smallestBuildingNumber1
+    highestBuildingNumber1
+  }
+}
+```
+
 
 ## Disclaimer
 

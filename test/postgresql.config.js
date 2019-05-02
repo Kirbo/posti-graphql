@@ -49,5 +49,9 @@ module.exports.default = {
         'editor.theme': 'light',
       },
     },
+    query: {
+      defaultLimit: 100,
+      maxLimit: 10000,
+    },
   },
 };
