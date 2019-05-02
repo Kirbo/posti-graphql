@@ -1,35 +1,71 @@
-import { GraphQLScalarType } from 'graphql';
-import { Kind } from 'graphql/language';
 import graphqlFields from 'graphql-fields';
 import { Op } from 'sequelize';
-import moment from 'moment';
 
-import { config } from 'posti';
 import GrahpQL from '../../classes/GraphQL';
 
-global.config = config;
+import DateResolver from './Date';
+
+import BuildingNumberResolver from './BuildingNumber';
 
 /**
  * Get options.
  *
- * @param {Object} criteria - Where criteria.
+ * @param {Object} args - Arguments.
  * @param {Object} info - Info.
  *
  * @returns {Object} Options for query.
  */
-const options = (criteria, info) => {
+const options = (args, info) => {
   const where = {};
+  const criteria = args.where;
   if (criteria) {
     Object.keys(criteria).forEach((field) => {
-      where[field] = { [Op.like]: criteria[field] };
+      if (field === 'buildingNumber') {
+        where[Op.or] = [
+          {
+            [Op.or]: [
+              { smallestBuildingNumber1: { [Op.eq]: criteria[field] } },
+              { smallestBuildingNumber2: { [Op.eq]: criteria[field] } },
+              { highestBuildingNumber1: { [Op.eq]: criteria[field] } },
+              { highestBuildingNumber2: { [Op.eq]: criteria[field] } },
+            ],
+          },
+          {
+            [Op.and]: [
+              {
+                [Op.or]: [
+                  { smallestBuildingNumber1: { [Op.or]: [{ [Op.lte]: criteria[field] }] } },
+                  { smallestBuildingNumber2: { [Op.or]: [{ [Op.lte]: criteria[field] }] } },
+                ],
+              },
+              {
+                [Op.or]: [
+                  { highestBuildingNumber1: { [Op.or]: [{ [Op.gte]: criteria[field] }] } },
+                  { highestBuildingNumber2: { [Op.or]: [{ [Op.gte]: criteria[field] }] } },
+                ],
+              },
+            ],
+          },
+        ];
+        where.oddEven = { [Op.eq]: (criteria[field] % 2 ? 1 : 2) };
+      } else {
+        where[field] = { [Op.like]: criteria[field] };
+      }
     });
   }
+
+  let limit = global.config.server.query.defaultLimit;
+
+  if (args.limit) {
+    limit = args.limit >= global.config.server.query.maxLimit
+      ? global.config.server.query.maxLimit
+      : args.limit;
+  }
+
   return {
+    attributes: Object.keys(graphqlFields(info)),
     where,
-    attributes: {
-      include: Object.keys(graphqlFields(info)),
-    },
-    limit: 100,
+    limit,
   };
 };
 
@@ -52,61 +88,20 @@ database.connect()
       });
   });
 
-const resolverMap = {
-  Date: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date either in ISO-8601 format or in epoch.',
 
-    /**
-     * Parse value.
-     *
-     * @param {String} value - Value.
-     *
-     * @returns {Date} New date.
-     */
-    parseValue: value => (
-      moment(value).format('YYYY-MM-DD')
-    ),
-
-    /**
-     * serialize.
-     *
-     * @param {String} value - Value.
-     *
-     * @returns {Date} Timestamp in milliseconds.
-     */
-    serialize: value => (
-      moment(value).format('YYYY-MM-DD')
-    ),
-
-    /**
-     * Parse literal.
-     *
-     * @param {String} ast - Value.
-     *
-     * @returns {Date} New date.
-     */
-    parseLiteral: (ast) => {
-      if (ast.kind === Kind.INT) {
-        return moment(parseInt(ast.value, 10)).format('YYYY-MM-DD');
-      } else if (ast.kind === Kind.STRING) {
-        return moment(ast.value).format('YYYY-MM-DD');
-      }
-      return null;
-    },
-  }),
+export default {
+  ...DateResolver,
+  ...BuildingNumberResolver,
 
   Query: {
-    Addresses: (obj, { where }, context, info) => (
-      models.addresses.findAll(options(where, info))
+    Addresses: (obj, args, context, info) => (
+      models.addresses.findAll(options(args, info))
     ),
-    PostalCodes: (obj, { where }, context, info) => (
-      models.postalCodes.findAll(options(where, info))
+    PostalCodes: (obj, args, context, info) => (
+      models.postalCodes.findAll(options(args, info))
     ),
-    PostalCodeChanges: (obj, { where }, context, info) => (
-      models.postalCodeChanges.findAll(options(where, info))
+    PostalCodeChanges: (obj, args, context, info) => (
+      models.postalCodeChanges.findAll(options(args, info))
     ),
   },
 };
-
-export default resolverMap;

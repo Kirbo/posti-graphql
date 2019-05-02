@@ -1,8 +1,8 @@
 const Query = `
 type Query {
-  Addresses(where: AddressInput): [Address]
-  PostalCodes(where: PostalCodeInput): [PostalCode]
-  PostalCodeChanges(where: PostalCodeChangeInput): [PostalCodeChange]
+  Addresses(where: AddressInput, limit: Int): [Address]
+  PostalCodes(where: PostalCodeInput, limit: Int): [PostalCode]
+  PostalCodeChanges(where: PostalCodeChangeInput, limit: Int): [PostalCodeChange]
 }
 `;
 

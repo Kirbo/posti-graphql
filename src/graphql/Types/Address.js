@@ -14,10 +14,11 @@ type Address {
   addressSwe: String
   empty1: String
   empty2: String
-  ### oddEven comments:
-  # - 1 = Odd
-  # - 2 = Even
-  ###
+  """
+ ## oddEven comments:
+    - 1 = Odd
+    - 2 = Even
+  """
   oddEven: Int
   smallestBuildingNumber1: Int
   smallestDeliveryLetter1: String
@@ -32,6 +33,9 @@ type Address {
   municipalityIdCode: String
   municipalityName: String
   municipalityNameSwe: String
+
+  ### Extended special types
+  buildingNumber: BuildingNumber
 }
 
 input AddressInput {  
@@ -47,10 +51,11 @@ input AddressInput {
   addressSwe: String
   empty1: String
   empty2: String
-  ### oddEven comments:
-  # - 1 = Odd
-  # - 2 = Even
-  ###
+  """
+ ## oddEven comments:
+    - 1 = Odd
+    - 2 = Even
+  """
   oddEven: Int
   smallestBuildingNumber1: Int
   smallestDeliveryLetter1: String
@@ -65,6 +70,9 @@ input AddressInput {
   municipalityIdCode: String
   municipalityName: String
   municipalityNameSwe: String
+
+  ### Extended special types
+  buildingNumber: BuildingNumber
 }`;
 
 export default typeDefinitions;

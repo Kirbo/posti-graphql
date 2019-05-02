@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-import GraphQL from './GraphQL';
+import GraphQL, { enableLogging } from './GraphQL';
 
 const graphql = new GraphQL();
 
@@ -85,6 +85,46 @@ describe('GraphQL', () => {
     });
     test('should not cast string', async () => {
       expect(graphql.castGraphQLType('other')).toBe('String');
+    });
+    test('should cast buildingNumber', async () => {
+      expect(graphql.castGraphQLType('buildingNumber')).toBe('Int');
+    });
+  });
+
+  describe('enableLogging()', () => {
+    test('should NOT have logging enabled', async () => {
+      const mockProcess = {
+        env: {},
+        argv: [...process.argv],
+        exit: () => { },
+      };
+      expect(enableLogging(mockProcess)).toBe(false);
+    });
+    test('should default to `console.log` for logging', async () => {
+      const mockProcess = {
+        env: { log: 'true' },
+        argv: [...process.argv],
+        exit: () => { },
+      };
+      // eslint-disable-next-line no-console
+      expect(enableLogging(mockProcess)).toBe(console.log);
+    });
+    test('should use `console.log` for logging', async () => {
+      const mockProcess = {
+        env: { log: 'log' },
+        argv: [...process.argv],
+        exit: () => { },
+      };
+      // eslint-disable-next-line no-console
+      expect(enableLogging(mockProcess)).toBe(console.log);
+    });
+    test('should use `console.info` for logging', async () => {
+      const mockProcess = {
+        env: { log: 'info' },
+        argv: [...process.argv],
+        exit: () => { },
+      };
+      expect(enableLogging(mockProcess)).toBe(console.info);
     });
   });
 });
