@@ -18,7 +18,7 @@ export default {
      *
      * @returns {Date} New date.
      */
-    parseValue: value => (
+    parseValue: (value) => (
       parseInt(value, 10)
     ),
 
@@ -29,7 +29,7 @@ export default {
      *
      * @returns {Date} Timestamp in milliseconds.
      */
-    serialize: value => (
+    serialize: (value) => (
       parseInt(value, 10)
     ),
 
