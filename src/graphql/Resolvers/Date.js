@@ -14,7 +14,7 @@ export default {
      *
      * @returns {Date} New date.
      */
-    parseValue: value => (
+    parseValue: (value) => (
       moment(value).format('YYYY-MM-DD')
     ),
 
@@ -25,7 +25,7 @@ export default {
      *
      * @returns {Date} Timestamp in milliseconds.
      */
-    serialize: value => (
+    serialize: (value) => (
       moment(value).format('YYYY-MM-DD')
     ),
 
