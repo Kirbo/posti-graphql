@@ -3810,7 +3810,7 @@ got@^6.7.1:
     unzip-response "^2.0.1"
     url-parse-lax "^1.0.0"
 
-graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.2:
+graceful-fs@4.2.3, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.2:
   version "4.2.3"
   resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.3.tgz#4a12ff1b60376ef09862c2093edd908328be8423"
   integrity sha512-a30VEBm4PEdx1dRB7MFK7BejejvCvBronbLjht+sHuGYj8PHs7M/5Z+rt5lw551vZ7yfTCj4Vuyy3mSJytDWRQ==
@@ -6209,10 +6209,10 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-posti@>=3.4.0:
-  version "3.4.0"
-  resolved "https://registry.npmjs.org/posti/-/posti-3.4.0.tgz#4c6b493c0b8f1c1b080ac63ea9597852a3791415"
-  integrity sha512-TBeagAzHwqqSqZuZfUDad33B3SJ4FseADTUP4boff8gEJvkIRjzpeF/thcII+xKUUhDauCyyj0DTGc8BbvrHVw==
+posti@>=3.4.1:
+  version "3.4.1"
+  resolved "https://registry.npmjs.org/posti/-/posti-3.4.1.tgz#aa27fe505dbac7ca28f1b766c1241072bd717c48"
+  integrity sha512-kxcc0z97Nfsy5f1t5vUkYTcC4Rjf0AQy8IdnNkUM6WtAtFCuVO7hMYFxrUoaASmfcz4RP0E0bRP978MSVu2Cfw==
   dependencies:
     bluebird "3.7.2"
     cli-progress "3.4.0"

@@ -1,6 +1,6 @@
 {
   "name": "posti-graphql",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "description": "Posti Basic Address auto-updater GraphQL server",
   "repository": "https://github.com/kirbo/posti-graphql",
   "author": "Kimmo Saari <kirbo@kirbo-designs.com>",
@@ -83,9 +83,12 @@
     "jest-plugin-console-matchers": "2.9.0",
     "nodemon": "2.0.1",
     "npm-run-all": "4.1.5",
-    "posti": ">=3.4.0"
+    "posti": ">=3.4.1"
   },
   "peerDependencies": {
-    "posti": ">=3.4.0"
+    "posti": ">=3.4.1"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.3"
   }
 }
