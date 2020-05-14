@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [3.4.3] - 2020-05-14
+
+### Fixed
+- Broken binary.
+
+
+## [3.4.1] - 2020-05-14
+
+### Added
+- `resolution` for `graceful-fs`.
+
+### Changed
+- Updated the dependencies.
+- Updated to Node 12
+
+
 ## [3.4.0] - 2019-12-02
 
 ### Changed
