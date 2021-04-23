@@ -88,7 +88,6 @@ database.connect()
       });
   });
 
-
 export default {
   ...DateResolver,
   ...BuildingNumberResolver,
