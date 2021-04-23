@@ -120,7 +120,6 @@ class GraphQL extends Database {
     fs.writeFileSync(typeFile, `${filePrefix}${definitions}${fileSuffix}`, 'utf8');
   };
 
-
   /**
    * Cast GraphQL type.
    *
